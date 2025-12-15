@@ -1,12 +1,16 @@
 export interface VsSchema {
-    id: {
+    id?: {
         message: number;
+        required: {message: string}
     },
-    currency: {
+    currency?: {
         message: string;
     },
-    balance: {
+    balance?: {
         message: number
+    },
+    required: {
+        message: string
     }
 }
 
