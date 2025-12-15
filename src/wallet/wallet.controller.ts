@@ -8,10 +8,10 @@ export class WalletController {
 
     @Post("/create")
     createWallet() {
-        
+        return 
     }
     @Get()
-    findAll() (
-
-    )
+    findAll() {
+        return 
+    }
 }
