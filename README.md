@@ -69,6 +69,8 @@ src/
 ├── app.module.ts
 └── main.ts
 
+```
+
 # Functional Requirements Coverage
 1. Create Wallet
 
