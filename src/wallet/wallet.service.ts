@@ -117,9 +117,10 @@ export class WalletService {
       if(!wallet){
         throw new BadRequestException("Invalid Request")
       }
+      return wallet
     }
     catch(error){
-      
+      return handleError(error, response)
     }
 
   }

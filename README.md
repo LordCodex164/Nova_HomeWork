@@ -23,6 +23,7 @@ Prerequisites:
 Node.js (v18+ recommended)
 npm
 Redis Server (required for BullMQ queue processing)
+Nest
 
 Important: Redis Setup Required
 This application uses BullMQ for asynchronous transaction processing, which depends on a Redis server. Without Redis, the app will fail to start or process queued jobs like funding and transfers.
@@ -280,10 +281,4 @@ Replace SQLite with PostgreSQL
 
 Add database transactions for strict atomicity
 
-Introduce idempotency keys for funding and transfers
-
 Use Redis-backed queues for high-throughput transaction processing
-
-Add proper observability (logging, metrics, tracing)
-
-Introduce rate limiting and enhanced security controls
