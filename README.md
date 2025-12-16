@@ -39,8 +39,13 @@ src/
 │   ├── dto/
 │   │   ├── login.dto.ts
 │   │   └── register.dto.ts
-│   ├── auth.service.ts
 │   ├── auth.controller.ts
+│   ├── auth.controller.spec.ts
+│   ├── auth.service.ts
+│   ├── auth.service.spec.ts
+│   ├── auth.guard.ts
+│   ├── auth.module.ts
+│   ├── auth.providers.ts
 │   └── auth_user.entity.ts
 │
 ├── wallet/
@@ -48,16 +53,40 @@ src/
 │   │   ├── create-wallet.dto.ts
 │   │   ├── fund-wallet.dto.ts
 │   │   └── transfer-wallet.dto.ts
-│   ├── wallet.service.ts
 │   ├── wallet.controller.ts
+│   ├── wallet.controller.spec.ts
+│   ├── wallet.service.ts
+│   ├── wallet.service.spec.ts
+│   ├── wallet.module.ts
+│   ├── wallet.providers.ts
 │   └── wallet.entity.ts
 │
+├── notification/
+│   ├── dto/
+│   │   ├── create-notification.dto.ts
+│   │   └── update-notification.dto.ts
+│   ├── notification.controller.ts
+│   ├── notification.controller.spec.ts
+│   ├── notification.service.ts
+│   ├── notification.service.spec.ts
+│   ├── notification.module.ts
+│   ├── notification.providers.ts
+│   └── notification.entity.ts
+│
 ├── transaction/
-│   ├── transaction.service.ts
+│   ├── dto/
+│   │   └── create-transaction.dto.ts
 │   ├── transaction.controller.ts
+│   ├── transaction.controller.spec.ts
+│   ├── transaction.service.ts
+│   ├── transaction.service.spec.ts
+│   ├── transaction.module.ts
+│   ├── transaction.providers.ts
 │   └── transaction.entity.ts
 │
 ├── db/
+│   ├── database.module.ts
+│   ├── database.providers.ts
 │   └── main.sqlite
 │
 ├── utils/
