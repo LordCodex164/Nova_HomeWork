@@ -15,6 +15,24 @@ The service supports:
 
 - Authentication (JWT-based)
 
+### Requirements
+
+Setup Instructions
+Prerequisites:
+
+Node.js (v18+ recommended)
+npm
+Redis Server (required for BullMQ queue processing)
+
+Important: Redis Setup Required
+This application uses BullMQ for asynchronous transaction processing, which depends on a Redis server. Without Redis, the app will fail to start or process queued jobs like funding and transfers.
+For local development:
+
+Run Redis using Docker (recommended for simplicity):textdocker run --name redis -p 6379:6379 -d redis:alpine
+Or install Redis locally (e.g., on macOS with Homebrew: brew install redis && brew services start redis; on Ubuntu: sudo apt install redis-server && sudo systemctl start redis).
+
+The app is pre-configured to connect to Redis at **localhost:6379**.
+
 **Persistence** is handled using SQLite, which is sufficient for this exercise and aligns with the instruction that in-memory or simple storage is acceptable.
 
 Tech Stack

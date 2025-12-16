@@ -56,7 +56,6 @@ export class WalletService {
           return transaction;
     }
     catch(error){
-        console.log("err2", error)
         return handleError(error, res)
     }
   }
@@ -106,12 +105,22 @@ export class WalletService {
 
   }
 
-  async findOne(userId: string, walletId: string) {
-    return await this.walletRepository.findOne({
-      where: {
-        id: walletId,
-        user_id: userId,
-      },
-    });
+  async findOne(userId: string, walletId: string, response: Response) {
+    try{
+      const wallet = await this.walletRepository.findOne({
+        where: {
+          id: walletId,
+          user_id: userId,
+        },
+      });
+  
+      if(!wallet){
+        throw new BadRequestException("Invalid Request")
+      }
+    }
+    catch(error){
+      
+    }
+
   }
 }

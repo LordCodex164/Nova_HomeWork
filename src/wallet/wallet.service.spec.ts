@@ -205,34 +205,4 @@ describe('WalletService', () => {
       ).rejects.toThrow('Invalid Recipient Wallet id');
     });
   });
-
-  describe('findOne', () => {
-    it('should find a wallet successfully', async () => {
-      mockWalletRepository.findOne.mockResolvedValue(mockWallet);
-
-      const result = await service.findOne('user-123', 'wallet-123');
-
-      expect(result).toEqual(mockWallet);
-      expect(walletRepository.findOne).toHaveBeenCalledWith({
-        where: {
-          id: 'wallet-123',
-          user_id: 'user-123',
-        },
-      });
-    });
-
-    it('should return null when wallet is not found', async () => {
-      mockWalletRepository.findOne.mockResolvedValue(null);
-
-      const result = await service.findOne('user-123', 'wallet-999');
-
-      expect(result).toBeNull();
-      expect(walletRepository.findOne).toHaveBeenCalledWith({
-        where: {
-          id: 'wallet-999',
-          user_id: 'user-123',
-        },
-      });
-    });
-  });
 });

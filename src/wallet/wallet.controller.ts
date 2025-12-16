@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from "@nestjs/common"
 import { WalletService } from "./wallet.service";
 import { CreateWalletDto } from "./dto/create-wallet.dto";
-import { Response, Request } from "express";
+import { Response, Request, response } from "express";
 import { AuthGuard } from "src/auth/auth.guard";
 import handleError from "src/utils/handle_error";
 import { FundWalletDto } from "./dto/fund-wallet.dto";
@@ -49,11 +49,9 @@ export class WalletController {
         id: string,
         @Req() req: Request,
         @Res({ passthrough: true }) res: Response,
-    ): Promise<IResponse<{
-        wallet: Wallet
-    }>>  {
+    ): Promise<IResponse<any>>  {
         try {
-            const wallet = await this.walletService.findOne(req["user"]?.id, id)
+            const wallet = await this.walletService.findOne(req["user"]?.id, id, response)
             return {
                 status: "success",
                 message: "Wallet Successfully Retrieved",
