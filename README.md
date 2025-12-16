@@ -15,7 +15,7 @@ The service supports:
 
 - Authentication (JWT-based)
 
-Persistence is handled using SQLite, which is sufficient for this exercise and aligns with the instruction that in-memory or simple storage is acceptable.
+**Persistence** is handled using SQLite, which is sufficient for this exercise and aligns with the instruction that in-memory or simple storage is acceptable.
 
 Tech Stack
 
@@ -32,40 +32,42 @@ BullMQ (for async transaction processing)
 bcrypt (password hashing)
 
 Project Structure
-src/
-├── auth/
-│   ├── dto/
-│   │   ├── login.dto.ts
-│   │   └── register.dto.ts
-│   ├── auth.service.ts
-│   ├── auth.controller.ts
-│   └── auth_user.entity.ts
-│
-├── wallet/
-│   ├── dto/
-│   │   ├── create-wallet.dto.ts
-│   │   ├── fund-wallet.dto.ts
-│   │   └── transfer-wallet.dto.ts
-│   ├── wallet.service.ts
-│   ├── wallet.controller.ts
-│   └── wallet.entity.ts
-│
-├── transaction/
-│   ├── transaction.service.ts
-│   ├── transaction.controller.ts
-│   └── transaction.entity.ts
-│
-├── db/
-│   └── main.sqlite
-│
-├── utils/
-│   └── handle_error.ts
-│
-├── types/
-│   └── response.ts
-│
-├── app.module.ts
-└── main.ts
+
+              src/
+              ├── auth/
+              │   ├── dto/
+              │   │   ├── login.dto.ts
+              │   │   └── register.dto.ts
+              │   ├── auth.service.ts
+              │   ├── auth.controller.ts
+              │   └── auth_user.entity.ts
+              │
+              ├── wallet/
+              │   ├── dto/
+              │   │   ├── create-wallet.dto.ts
+              │   │   ├── fund-wallet.dto.ts
+              │   │   └── transfer-wallet.dto.ts
+              │   ├── wallet.service.ts
+              │   ├── wallet.controller.ts
+              │   └── wallet.entity.ts
+              │
+              ├── transaction/
+              │   ├── transaction.service.ts
+              │   ├── transaction.controller.ts
+              │   └── transaction.entity.ts
+              │
+              ├── db/
+              │   └── main.sqlite
+              │
+              ├── utils/
+              │   └── handle_error.ts
+              │
+              ├── types/
+              │   └── response.ts
+              │
+              ├── app.module.ts
+              └── main.ts
+
 
 # Functional Requirements Coverage
 1. Create Wallet
