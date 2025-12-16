@@ -1,10 +1,10 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { Response } from 'express';
-import { RegisterDto } from './dto/register.dto';
+import { Body, Controller, Post, Res } from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { LoginDto } from "./dto/login.dto";
+import { Response } from "express";
+import { RegisterDto } from "./dto/register.dto";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -12,17 +12,17 @@ export class AuthController {
   login(
     @Body()
     loginDto: LoginDto,
-    @Res({passthrough: true}) res: Response,
+    @Res({ passthrough: true }) res: Response
   ) {
-    return this.authService.signIn(loginDto, res)
+    return this.authService.signIn(loginDto, res);
   }
-  
+
   @Post("/register")
   register(
     @Body()
     registerDto: RegisterDto,
-    @Res({passthrough: true}) res: Response,
-  ){
-    return this.authService.register(registerDto, res)
+    @Res({ passthrough: true }) res: Response
+  ) {
+    return this.authService.register(registerDto, res);
   }
 }

@@ -32,31 +32,30 @@ export class WalletService {
     fundWallet: FundWalletDto,
     res: Response
   ) {
-    try{
-        const existing_wallet = await this.walletRepository.findOne({
-            where: {
-              user_id: userId,
-              id: walletId,
-            },
-          });
-            
-          if (!existing_wallet) {
-            res.statusCode = HttpStatus.BAD_REQUEST;
-            throw new BadRequestException("Wallet already exists");
-          }
-            
-          const transaction = await this.transactionService.createTransaction({
-            amount: fundWallet.amount,
-            user_id: userId,
-            wallet_id: walletId,
-            narration: fundWallet.narration,
-            type: "Credit"
-          });
-             
-          return transaction;
-    }
-    catch(error){
-        return handleError(error, res)
+    try {
+      const existing_wallet = await this.walletRepository.findOne({
+        where: {
+          user_id: userId,
+          id: walletId,
+        },
+      });
+
+      if (!existing_wallet) {
+        res.statusCode = HttpStatus.BAD_REQUEST;
+        throw new BadRequestException("Wallet already exists");
+      }
+
+      const transaction = await this.transactionService.createTransaction({
+        amount: fundWallet.amount,
+        user_id: userId,
+        wallet_id: walletId,
+        narration: fundWallet.narration,
+        type: "Credit",
+      });
+
+      return transaction;
+    } catch (error) {
+      return handleError(error, res);
     }
   }
 
@@ -66,62 +65,60 @@ export class WalletService {
     transferWalletDto: TransferWalletDto
   ) {
     const wallet = await this.walletRepository.findOne({
-        where: {
-            user_id: userId,
-            id: walletId
-        }
+      where: {
+        user_id: userId,
+        id: walletId,
+      },
     });
-    
-    if(wallet.balance < transferWalletDto.amount) {
-        throw new BadRequestException("Insufficient Balance")
+
+    if (wallet.balance < transferWalletDto.amount) {
+      throw new BadRequestException("Insufficient Balance");
     }
 
     const recipientWalletId = await this.walletRepository.findOne({
-        where:{
-            id: transferWalletDto.recipientWalletId
-        },
-    })
+      where: {
+        id: transferWalletDto.recipientWalletId,
+      },
+    });
 
-    if(!recipientWalletId){
-        throw new BadRequestException("Invalid Recipient Wallet id")
+    if (!recipientWalletId) {
+      throw new BadRequestException("Invalid Recipient Wallet id");
     }
 
     let transaction = await this.transactionService.createTransaction({
-        amount: transferWalletDto.amount,
-        user_id: userId,
-        wallet_id: walletId,
-        narration: "",
-        type: "Debit",
-    })
+      amount: transferWalletDto.amount,
+      user_id: userId,
+      wallet_id: walletId,
+      narration: "",
+      type: "Debit",
+    });
 
-    const recipientTransaction = await this.transactionService.createTransaction({
+    const recipientTransaction =
+      await this.transactionService.createTransaction({
         amount: transferWalletDto.amount,
         user_id: userId,
         wallet_id: walletId,
         narration: "I just got my alert!!",
-        type: "Credit"
-    })
-    return transaction
-
+        type: "Credit",
+      });
+    return transaction;
   }
 
   async findOne(userId: string, walletId: string, response: Response) {
-    try{
+    try {
       const wallet = await this.walletRepository.findOne({
         where: {
           id: walletId,
           user_id: userId,
         },
       });
-  
-      if(!wallet){
-        throw new BadRequestException("Invalid Request")
-      }
-      return wallet
-    }
-    catch(error){
-      return handleError(error, response)
-    }
 
+      if (!wallet) {
+        throw new BadRequestException("Invalid Request");
+      }
+      return wallet;
+    } catch (error) {
+      return handleError(error, response);
+    }
   }
 }
