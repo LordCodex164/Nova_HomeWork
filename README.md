@@ -236,7 +236,7 @@ http://localhost:3000
 
 Each wallet belongs to a single user
 
-Currency is fixed to USD for simplicity
+We Have Flexible simplicity
 
 SQLite is sufficient for the scope of this task
 
