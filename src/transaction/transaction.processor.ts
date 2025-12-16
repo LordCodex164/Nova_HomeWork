@@ -23,7 +23,6 @@ export class TransactionProcessor extends WorkerHost {
             },
             include: [Wallet]
         })
-        console.log(">>123", transaction)
         const wallet = transaction.wallet
         let balance:number = (wallet as any).balance
         if(transaction.type == "Credit"){

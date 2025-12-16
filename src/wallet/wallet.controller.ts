@@ -6,6 +6,9 @@ import { AuthGuard } from "src/auth/auth.guard";
 import handleError from "src/utils/handle_error";
 import { FundWalletDto } from "./dto/fund-wallet.dto";
 import { TransferWalletDto } from "./dto/transer-wallet.dto";
+import { Transaction } from "src/transaction/transaction.entity";
+import { IResponse } from "src/types/response";
+import { Wallet } from "./wallet.entity";
 
 @Controller("wallet")
 export class WalletController {
@@ -46,7 +49,9 @@ export class WalletController {
         id: string,
         @Req() req: Request,
         @Res({ passthrough: true }) res: Response,
-    ) {
+    ): Promise<IResponse<{
+        wallet: Wallet
+    }>>  {
         try {
             const wallet = await this.walletService.findOne(req["user"]?.id, id)
             return {
@@ -70,7 +75,9 @@ export class WalletController {
         id: string,
         @Req() req: Request,
         @Res({ passthrough: true }) res: Response,
-    ) {
+    ) :Promise<IResponse<{
+        transaction: any
+    }>> {
         try {
           const transaction = await this.walletService.fundWallet(
             req["user"].id, 
@@ -98,7 +105,9 @@ export class WalletController {
         id: string,
         @Req() req: Request,
         @Res({ passthrough: true }) res: Response,
-    ) {
+    ) : Promise<IResponse<{
+        transaction: Transaction
+    }>> {
         try {
           const transaction = await this.walletService.transfer(req["user"].id, id, transferWalletDto)
           return {

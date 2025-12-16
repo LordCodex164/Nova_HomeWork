@@ -28,13 +28,6 @@ export class Transaction extends Model {
     })
     status: "PENDING" | "PROCESSING" | "SUCCESSFUL" | "FAILED"
 
-    @ForeignKey(() => Transaction)
-    @Column
-    transaction_id: string;
-
-    @BelongsTo(() => Transaction)
-    transaction: Transaction;
-
     @ForeignKey(() => Wallet)
     @Column
     wallet_id: string;

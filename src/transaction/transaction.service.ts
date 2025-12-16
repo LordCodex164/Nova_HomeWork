@@ -19,8 +19,7 @@ export class TransactionService {
             user_id: string,
             wallet_id: string,
             narration: string,
-            type: "Credit" | "Debit",
-            transaction_id?: number,
+            type: "Credit" | "Debit"
         }
     ) {
         try{
@@ -29,7 +28,6 @@ export class TransactionService {
         this.transactionQueue.add("transaction_update", {
             ...txn.dataValues
         })
-        console.log(txn, "txn")
         return txn
         }
         catch(error){

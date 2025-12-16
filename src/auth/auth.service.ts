@@ -30,8 +30,6 @@ export class AuthService {
                 }
             })
 
-            console.log("user-", user)
-
             if (!user || !bcrypt.compareSync(loginDto.password, user.password)) {
                 res.statusCode = HttpStatus.BAD_REQUEST
                     throw new BadRequestException("Invalid Credientials")

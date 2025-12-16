@@ -50,7 +50,7 @@ export class WalletService {
             user_id: userId,
             wallet_id: walletId,
             narration: fundWallet.narration,
-            type: "Credit",
+            type: "Credit"
           });
              
           return transaction;
@@ -66,8 +66,6 @@ export class WalletService {
     walletId: string,
     transferWalletDto: TransferWalletDto
   ) {
-    console.log("u", userId)
-    console.log("wall", walletId)
     const wallet = await this.walletRepository.findOne({
         where: {
             user_id: userId,
@@ -75,7 +73,6 @@ export class WalletService {
         }
     });
     
-    console.log("w>>", wallet)
     if(wallet.balance < transferWalletDto.amount) {
         throw new BadRequestException("Insufficient Balance")
     }
@@ -103,14 +100,8 @@ export class WalletService {
         user_id: userId,
         wallet_id: walletId,
         narration: "I just got my alert!!",
-        type: "Credit",
-        transaction_id: transaction.id
+        type: "Credit"
     })
-
-    await transaction.$set("transaction_id", recipientTransaction.id)
-
-    transaction = await transaction.reload()
-
     return transaction
 
   }
