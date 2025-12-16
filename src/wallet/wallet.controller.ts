@@ -1,7 +1,8 @@
-import {Body, Controller, Get, Post, Res} from "@nestjs/common"
+import {Body, Controller, Get, Post, Req, Res, UsePipes, ValidationPipe} from "@nestjs/common"
 import { WalletService } from "./wallet.service";
 import { create } from "domain";
 import { CreateWalletDto } from "./dto/create-wallet.dto";
+import { Response, Request } from "express";
 
 @Controller("wallet")
 
@@ -12,10 +13,10 @@ export class WalletController {
     createWallet(
         @Body()
         createWalletDto: CreateWalletDto,
-        @Res() res,
-
+        @Req() req: Request,
+        @Res({passthrough: true}) res: Response,
     ) {
-        //return this.walletService.createWallet(createWalletDto, res);
+        return this.walletService.createWallet(createWalletDto, req, res);
     }
     @Get()
     findAll() {

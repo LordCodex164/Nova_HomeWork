@@ -1,19 +1,14 @@
-import { ValidationSchema } from "src/types/validation";
-
-export class CreateWalletDto {
-    id: number;
-    currency: string;
-    balance: number
-}
-
-export const CreateWalletSchema: ValidationSchema = {
-    id: {
-        required: {message: "wallet id is required to create a wallet"},
-    },
-    currency: {
-        required: {message: "kindly provide a currency"}
-    },
-    balance: {
-        required: {message: "balance is required to create a wallet"}
-    }
-}
+import {
+    IsNotEmpty,
+    IsEnum
+  } from 'class-validator';
+  
+  export class CreateWalletDto {
+    @IsNotEmpty({
+        message: "Wallet Currency is required"
+    })
+    @IsEnum(['USD', 'EUR', 'GBP', 'NGN', 'JPY', 'CNY'], {
+        message: "Currency must be one of these options"
+    })
+    currency: string
+  }

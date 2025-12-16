@@ -1,6 +1,8 @@
 
 import { Sequelize } from 'sequelize-typescript';
-//import { Cat } from '../cats/cat.entity';
+import { Wallet } from './wallet/wallet.entity';
+import { Transaction } from './transaction/transaction.entity';
+import { User } from './auth/auth_user.entity';
 
 export const databaseProviders = [
   {
@@ -10,7 +12,7 @@ export const databaseProviders = [
         dialect: 'sqlite',
         database: 'src/db/main.sqlite',
       });
-      sequelize.addModels([]);
+      sequelize.addModels([Wallet, Transaction, User]);
       await sequelize.sync();
       return sequelize;
     },

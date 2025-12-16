@@ -1,3 +1,5 @@
+import { ValidationError } from "class-validator";
+
 export interface IResponse<T> {
     status: "error" | "success";
     message: string;
@@ -7,11 +9,6 @@ export interface IResponse<T> {
 
   export interface IResponseError {
     name: string;
-    errors?: {
-      [key: string]:
-        | string
-        | { [key: string]: string }[]
-        | { [key: string]: { [key: string]: string } };
-    };
+    errors?: ValidationError[];
     debug?: string;
   }
