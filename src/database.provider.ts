@@ -10,7 +10,7 @@ export const databaseProviders = [
     useFactory: async () => {
       const sequelize = new Sequelize({
         dialect: 'sqlite',
-        database: 'src/db/main.sqlite',
+        storage: 'src/db/main.sqlite',
       });
       sequelize.addModels([Wallet, Transaction, User]);
       await sequelize.sync();

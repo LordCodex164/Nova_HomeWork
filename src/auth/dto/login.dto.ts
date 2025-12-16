@@ -1,10 +1,9 @@
-import { IsNotEmpty, IsStrongPassword } from "class-validator";
-import { IsEmail } from "sequelize-typescript";
+import { IsNotEmpty, IsStrongPassword, IsEmail } from "class-validator";
 
 
 export class LoginDto {
     @IsNotEmpty()
-    @IsEmail
+    @IsEmail()
     email: string
 
     @IsStrongPassword()

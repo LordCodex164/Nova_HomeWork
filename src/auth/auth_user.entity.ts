@@ -1,5 +1,3 @@
-
-import { NonAttribute } from 'sequelize';
 import { Table, Column, Model, HasMany } from 'sequelize-typescript';
 import { Transaction } from 'src/transaction/transaction.entity';
 import { Wallet } from 'src/wallet/wallet.entity';
@@ -16,6 +14,9 @@ export class User extends Model {
     @Column
     lastname: string;
 
+    @Column
+    email: string;
+
     @Column({
         set(val: string){
             let hashedValue = null;
@@ -28,9 +29,9 @@ export class User extends Model {
     password: string;
 
     @HasMany(() => Wallet)
-    wallets: NonAttribute<typeof Wallet>[];
+    wallets: Wallet[]
 
     @HasMany(() => Transaction)
-    transactions: NonAttribute<typeof Transaction>[]
+    transactions: Transaction[]
 
 }

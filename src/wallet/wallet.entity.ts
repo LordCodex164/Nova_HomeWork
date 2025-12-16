@@ -1,5 +1,5 @@
 
-import { DataTypes, NonAttribute } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import { Table, Column, Model, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { User } from 'src/auth/auth_user.entity';
 
@@ -8,7 +8,9 @@ export class Wallet extends Model {
     @Column({ primaryKey: true, autoIncrement: true })
     id: number;
 
-    @Column
+    @Column({
+        defaultValue: 0,
+    })
     balance: number;
 
     @Column({
@@ -23,6 +25,6 @@ export class Wallet extends Model {
     user_id: string;
 
     @BelongsTo(() => User)
-    user: NonAttribute<typeof User>
+    user: User
 
 }

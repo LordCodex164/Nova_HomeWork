@@ -1,5 +1,5 @@
 
-import { DataTypes, NonAttribute } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import { Table, Column, Model, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { User } from 'src/auth/auth_user.entity';
 import { Wallet } from 'src/wallet/wallet.entity';
@@ -13,23 +13,40 @@ export class Transaction extends Model {
     amount: number;
 
     @Column({
-        type: DataTypes.ENUM({
-            values: ['USD', 'EUR', 'GBP', 'NGN', 'JPY', 'CNY']
-        }), allowNull: false, defaultValue: 'USD',
+        allowNull: true
     })
-    currency: string;
+    narration: string;
+
+    @Column({
+        type: DataTypes.ENUM("Credit", "Debit")
+    })
+    type: "Credit" | "Debit"
+
+    @Column({
+        type: DataTypes.ENUM("PENDING", "PROCESSING", "SUCCESSFUL", "FAILED"),
+        defaultValue: "PENDING"
+    })
+    status: "PENDING" | "PROCESSING" | "SUCCESSFUL" | "FAILED"
+
+    @ForeignKey(() => Transaction)
+    @Column
+    transaction_id: string;
+
+    @BelongsTo(() => Transaction)
+    transaction: Transaction;
 
     @ForeignKey(() => Wallet)
     @Column
     wallet_id: string;
 
     @BelongsTo(() => Wallet)
-    wallet: NonAttribute<typeof Wallet>
+    wallet: Wallet
 
     @ForeignKey(() => User)
     @Column
     user_id: string;
     
     @BelongsTo(() => User)
-    user: NonAttribute<typeof User>
+    user: User
+
 }
