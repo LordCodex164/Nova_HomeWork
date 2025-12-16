@@ -1,82 +1,238 @@
-# Backend Developer Take-Home Test (NestJS)
+# Wallet Service API (NestJS)
+## Overview
 
-## Objective
-This exercise is designed to assess your ability to structure a NestJS project, design clean APIs, and implement real-world backend logic without overengineering.
+This project is a simple wallet service built with NestJS and TypeScript, designed to demonstrate clean backend structure, API design, and real-world wallet logic without unnecessary complexity.
 
-We are not looking for perfection — clarity, correctness, and good engineering judgment matter more.
+The service supports:
 
-## Tech Stack
-- **NestJS**
-- **TypeScript**
-- In-memory storage or simple database (SQLite / Postgres optional)
+- Wallet creation
+
+- Funding wallets
+
+- Transferring funds between wallets
+
+- Fetching wallet details with transaction history
+
+- Authentication (JWT-based)
+
+Persistence is handled using SQLite, which is sufficient for this exercise and aligns with the instruction that in-memory or simple storage is acceptable.
+
+Tech Stack
+
+NestJS
+
+TypeScript
+
+SQLite (via Sequelize)
+
+JWT Authentication
+
+BullMQ (for async transaction processing)
+
+bcrypt (password hashing)
+
+Project Structure
+src/
+├── auth/
+│   ├── dto/
+│   │   ├── login.dto.ts
+│   │   └── register.dto.ts
+│   ├── auth.service.ts
+│   ├── auth.controller.ts
+│   └── auth_user.entity.ts
+│
+├── wallet/
+│   ├── dto/
+│   │   ├── create-wallet.dto.ts
+│   │   ├── fund-wallet.dto.ts
+│   │   └── transfer-wallet.dto.ts
+│   ├── wallet.service.ts
+│   ├── wallet.controller.ts
+│   └── wallet.entity.ts
+│
+├── transaction/
+│   ├── transaction.service.ts
+│   ├── transaction.controller.ts
+│   └── transaction.entity.ts
+│
+├── db/
+│   └── main.sqlite
+│
+├── utils/
+│   └── handle_error.ts
+│
+├── types/
+│   └── response.ts
+│
+├── app.module.ts
+└── main.ts
+
+# Functional Requirements Coverage
+1. Create Wallet
+
+Allows an authenticated user to create a wallet
+
+Wallet fields:
+
+id
+
+currency (default: USD)
+
+balance (default: 0)
+
+Wallets are associated with a user (user_id).
+
+2. Fund Wallet
+
+Adds a positive amount to an existing wallet
+
+Input validation enforced via DTOs
+
+Each funding action:
+
+Creates a Credit transaction
+
+Is queued for async processing via BullMQ
+
+3. Transfer Between Wallets
+
+Transfers funds from one wallet to another
+
+Validations include:
+
+Sender wallet ownership
+
+Recipient wallet existence
+
+Sufficient balance
+
+Prevents negative balances
+
+Creates:
+
+A Debit transaction for sender
+
+A Credit transaction for recipient
+
+Transactions are linked for traceability
+
+4. Fetch Wallet Details
+
+Fetches wallet information by walletId
+
+Includes:
+
+Wallet balance
+
+Associated transaction history
+
+Authentication
+
+The API uses JWT-based authentication.
+
+Features:
+
+User registration
+
+Secure password hashing using bcrypt
+
+Login with JWT token issuance
+
+Protected wallet and transaction endpoints
+
+Error Handling & Validation
+
+DTO-based validation for request payloads
+
+Centralized error handling via handleError
+
+Meaningful HTTP status codes and error messages
+
+Explicit handling for:
+
+Invalid credentials
+
+Insufficient balance
+
+Invalid wallet IDs
+
+Duplicate users
+
+API Endpoints (Summary)
+Auth
+
+POST /auth/register – Register a new user
+
+POST /auth/login – Login and receive JWT token
+
+Wallet
+
+POST /wallet – Create wallet
+
+POST /wallet/:id/fund – Fund wallet
+
+POST /wallet/:id/transfer – Transfer funds
+
+GET /wallet/:id – Fetch wallet details
+
+A Postman collection is included in the repository for easy testing.
+
+# Setup Instructions
+1. Clone Repository
+git clone <repository-url>
+cd wallet-service
+
+2. Install Dependencies
+npm install
+
+3. Run Database Migrations (if applicable)
+
+SQLite database file is located at:
+
+src/db/main.sqlite
+
+4. Start Application
+npm run start:dev
 
 
-## Task
-Build a **simple wallet service**.
+Server runs on:
 
+http://localhost:3000
 
-## Functional Requirements
+# Assumptions Made
 
-### 1. Create Wallet
-Create an API to create a wallet.
+Each wallet belongs to a single user
 
-**Wallet fields:**
-- `id`
-- `currency` (USD)
-- `balance`
+Currency is fixed to USD for simplicity
 
+SQLite is sufficient for the scope of this task
 
-### 2. Fund Wallet
-Create an API to fund a wallet.
+Authentication is required for all wallet operations
 
-- Add a positive amount to the wallet balance
-- Validate input
+Balance updates are driven by transaction records
 
+# Nice-to-Have Features Implemented
 
-### 3. Transfer Between Wallets
-Create an API to transfer funds between wallets.
+Asynchronous transaction processing using BullMQ
 
-- Prevent negative balances
-- Validate sender and receiver wallets
-- Handle insufficient balance errors
+Clear separation of concerns (Auth, Wallet, Transaction)
 
+DTO validation and consistent error handling
 
-### 4. Fetch Wallet Details
-Create an API to fetch wallet details.
+Transaction linking for transfer operations
 
-- Wallet information
-- Transaction history
+## Notes on Scaling to Production
 
+If this system were to scale to production:
 
-## Validation & Error Handling
-- Validate request payloads
-- Return meaningful error responses
-- Ensure wallet balance integrity
+Replace SQLite with PostgreSQL
 
+Add database transactions for strict atomicity
 
-## Nice-to-Have (Optional)
-These are optional and will be considered a bonus:
+Introduce idempotency keys for funding and transfers
 
-- Idempotency for fund/transfer operations
-- Simple unit tests
-- Brief notes on how this system would scale in production
+Use Redis-backed queues for high-throughput transaction processing
 
-## Submission Instructions
-Please submit:
-- A **GitHub repository link**
-- A **README** that includes:
-  - Setup instructions
-  - Any assumptions made
-- Postman Collection with API Endpoints
-  - API endpoints
+Add proper observability (logging, metrics, tracing)
 
-
-## Time Expectation
-- **Estimated effort:** 4–6 hours
-- **Deadline:** 24 hours from receiving the test
-
-
-## Notes
-- Focus on clean structure and readability
-- Do not overengineer
-- In-memory storage is perfectly acceptable
+Introduce rate limiting and enhanced security controls

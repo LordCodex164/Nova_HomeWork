@@ -5,7 +5,7 @@ import { Transaction } from "./transaction.entity";
 import { Wallet } from "src/wallet/wallet.entity";
 
 @Injectable()
-@Processor("transaction_update")
+@Processor("transaction")
 export class TransactionProcessor extends WorkerHost {
     constructor(
         @Inject('TRANSACTIONS_REPOSITORY')
